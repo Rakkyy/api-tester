@@ -11,14 +11,14 @@ interface SidebarProps {
 
 export default function Sidebar({ requests, onSelectRequest, onDeleteRequest, selectedRequestId }: SidebarProps) {
   return (
-    <div className="w-64 sm:w-72 lg:w-64 bg-[#252526] border-r border-[#3e3e42] flex flex-col h-full">
-      <div className="px-3 sm:px-4 py-3 border-b border-[#3e3e42]">
-        <h2 className="text-sm font-semibold text-gray-300">Saved Requests</h2>
-        <p className="text-xs text-gray-500 mt-1">{requests.length} request{requests.length !== 1 ? 's' : ''}</p>
+    <div className="w-64 sm:w-72 lg:w-64 bg-white dark:bg-[#252526] border-r border-gray-300 dark:border-[#3e3e42] flex flex-col h-full">
+      <div className="px-3 sm:px-4 py-3 border-b border-gray-300 dark:border-[#3e3e42]">
+        <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Saved Requests</h2>
+        <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">{requests.length} request{requests.length !== 1 ? 's' : ''}</p>
       </div>
       <div className="flex-1 overflow-y-auto">
         {requests.length === 0 ? (
-          <div className="p-4 text-center text-gray-500 text-xs sm:text-sm">
+          <div className="p-4 text-center text-gray-500 dark:text-gray-500 text-xs sm:text-sm">
             No saved requests yet
           </div>
         ) : (
@@ -26,8 +26,8 @@ export default function Sidebar({ requests, onSelectRequest, onDeleteRequest, se
             {requests.map((request) => (
               <div
                 key={request.id}
-                className={`group px-3 sm:px-4 py-2 hover:bg-[#2d2d30] cursor-pointer transition-colors ${
-                  selectedRequestId === request.id ? 'bg-[#2d2d30]' : ''
+                className={`group px-3 sm:px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#2d2d30] cursor-pointer transition-colors ${
+                  selectedRequestId === request.id ? 'bg-gray-100 dark:bg-[#2d2d30]' : ''
                 }`}
                 onClick={() => onSelectRequest(request)}
               >
@@ -50,15 +50,15 @@ export default function Sidebar({ requests, onSelectRequest, onDeleteRequest, se
                         {request.method}
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-gray-300 mt-1 truncate">{request.name}</p>
-                    <p className="text-xs text-gray-500 mt-1 truncate">{request.url}</p>
+                    <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mt-1 truncate">{request.name}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-500 mt-1 truncate">{request.url}</p>
                   </div>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       onDeleteRequest(request.id);
                     }}
-                    className="opacity-0 sm:group-hover:opacity-100 lg:opacity-100 text-red-400 hover:text-red-300 text-sm sm:text-xs transition-opacity flex-shrink-0"
+                    className="opacity-0 sm:group-hover:opacity-100 lg:opacity-100 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-sm sm:text-xs transition-opacity flex-shrink-0"
                     aria-label="Delete request"
                   >
                     ✕

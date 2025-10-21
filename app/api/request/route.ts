@@ -2,7 +2,43 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { url, method, headers, body } = await request.json();
+    let { url, method, headers, body } = await request.json();
+
+    // Validate and fix URL
+    if (!url || typeof url !== 'string') {
+      return NextResponse.json(
+        {
+          status: 0,
+          statusText: 'Error',
+          headers: {},
+          data: { error: 'URL is required' },
+          duration: 0,
+        },
+        { status: 400 }
+      );
+    }
+
+    // Add protocol if missing
+    url = url.trim();
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      url = 'https://' + url;
+    }
+
+    // Validate URL format
+    try {
+      new URL(url);
+    } catch (e) {
+      return NextResponse.json(
+        {
+          status: 0,
+          statusText: 'Error',
+          headers: {},
+          data: { error: 'Invalid URL format. Please enter a valid URL (e.g., https://api.example.com)' },
+          duration: 0,
+        },
+        { status: 400 }
+      );
+    }
 
     const startTime = Date.now();
 
@@ -62,12 +98,25 @@ export async function POST(request: NextRequest) {
       duration,
     });
   } catch (error: any) {
+    console.error('API request error:', error);
+
+    // Provide more specific error messages
+    let errorMessage = error.message || 'Failed to make request';
+
+    if (error.cause?.code === 'ENOTFOUND') {
+      errorMessage = 'Could not resolve hostname. Please check the URL and try again.';
+    } else if (error.cause?.code === 'ECONNREFUSED') {
+      errorMessage = 'Connection refused. The server may be down or unreachable.';
+    } else if (error.name === 'AbortError') {
+      errorMessage = 'Request timeout. The server took too long to respond.';
+    }
+
     return NextResponse.json(
       {
         status: 0,
         statusText: 'Error',
         headers: {},
-        data: { error: error.message || 'Failed to make request' },
+        data: { error: errorMessage },
         duration: 0,
       },
       { status: 500 }

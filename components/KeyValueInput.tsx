@@ -39,19 +39,19 @@ export default function KeyValueInput({ items, onChange, placeholder }: KeyValue
               placeholder={placeholder?.key || 'Key'}
               value={item.key}
               onChange={(e) => handleChange(index, 'key', e.target.value)}
-              className="flex-1 min-w-0 px-2 sm:px-3 py-2 bg-[#2d2d30] border border-[#3e3e42] rounded text-xs sm:text-sm focus:outline-none focus:border-[#007acc]"
+              className="flex-1 min-w-0 px-2 sm:px-3 py-2 bg-white dark:bg-[#2d2d30] border border-gray-300 dark:border-[#3e3e42] rounded text-xs sm:text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:border-blue-500 dark:focus:border-[#007acc]"
             />
             <input
               type="text"
               placeholder={placeholder?.value || 'Value'}
               value={item.value}
               onChange={(e) => handleChange(index, 'value', e.target.value)}
-              className="flex-1 min-w-0 px-2 sm:px-3 py-2 bg-[#2d2d30] border border-[#3e3e42] rounded text-xs sm:text-sm focus:outline-none focus:border-[#007acc]"
+              className="flex-1 min-w-0 px-2 sm:px-3 py-2 bg-white dark:bg-[#2d2d30] border border-gray-300 dark:border-[#3e3e42] rounded text-xs sm:text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:border-blue-500 dark:focus:border-[#007acc]"
             />
           </div>
           <button
             onClick={() => handleRemove(index)}
-            className="w-full sm:w-auto px-3 py-2 bg-[#c72e2e] hover:bg-[#e03838] rounded text-xs sm:text-sm transition-colors"
+            className="w-full sm:w-auto px-3 py-2 bg-red-600 dark:bg-[#c72e2e] hover:bg-red-700 dark:hover:bg-[#e03838] rounded text-xs sm:text-sm text-white transition-colors"
           >
             Remove
           </button>
@@ -59,7 +59,7 @@ export default function KeyValueInput({ items, onChange, placeholder }: KeyValue
       ))}
       <button
         onClick={handleAdd}
-        className="w-full sm:w-auto px-4 py-2 bg-[#0e639c] hover:bg-[#1177bb] rounded text-xs sm:text-sm transition-colors"
+        className="w-full sm:w-auto px-4 py-2 bg-blue-600 dark:bg-[#0e639c] hover:bg-blue-700 dark:hover:bg-[#1177bb] rounded text-xs sm:text-sm text-white transition-colors"
       >
         Add {placeholder?.key || 'Item'}
       </button>

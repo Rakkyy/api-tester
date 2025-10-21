@@ -5,6 +5,7 @@ import { ApiRequest, ApiResponse, HttpMethod, KeyValuePair } from '@/types';
 import KeyValueInput from '@/components/KeyValueInput';
 import ResponsePanel from '@/components/ResponsePanel';
 import Sidebar from '@/components/Sidebar';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const STORAGE_KEY = 'api-tester-requests';
 const MAX_REQUESTS = 20;
@@ -180,19 +181,22 @@ export default function Home() {
 
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <div className="px-3 sm:px-6 py-3 sm:py-4 bg-[#252526] border-b border-[#3e3e42]">
-          <div className="flex items-center gap-3 mb-3 sm:mb-4">
-            {/* Hamburger Menu for Mobile */}
-            <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="lg:hidden p-2 hover:bg-[#2d2d30] rounded transition-colors"
-              aria-label="Toggle sidebar"
-            >
-              <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            <h1 className="text-lg sm:text-xl font-bold text-gray-200">API Tester</h1>
+        <div className="px-3 sm:px-6 py-3 sm:py-4 bg-gray-100 dark:bg-[#252526] border-b border-gray-300 dark:border-[#3e3e42]">
+          <div className="flex items-center justify-between gap-3 mb-3 sm:mb-4">
+            <div className="flex items-center gap-3">
+              {/* Hamburger Menu for Mobile */}
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="lg:hidden p-2 hover:bg-gray-200 dark:hover:bg-[#2d2d30] rounded transition-colors"
+                aria-label="Toggle sidebar"
+              >
+                <svg className="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-200">API Tester</h1>
+            </div>
+            <ThemeToggle />
           </div>
 
           {/* Request Name */}
@@ -201,7 +205,7 @@ export default function Home() {
             placeholder="Request name (optional)"
             value={requestName}
             onChange={(e) => setRequestName(e.target.value)}
-            className="w-full px-3 py-2 mb-3 bg-[#2d2d30] border border-[#3e3e42] rounded text-sm focus:outline-none focus:border-[#007acc]"
+            className="w-full px-3 py-2 mb-3 bg-white dark:bg-[#2d2d30] border border-gray-300 dark:border-[#3e3e42] rounded text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:border-blue-500 dark:focus:border-[#007acc]"
           />
 
           {/* URL Bar */}
@@ -209,7 +213,7 @@ export default function Home() {
             <select
               value={method}
               onChange={(e) => setMethod(e.target.value as HttpMethod)}
-              className="w-full sm:w-auto px-4 py-2 bg-[#2d2d30] border border-[#3e3e42] rounded font-semibold focus:outline-none focus:border-[#007acc]"
+              className="w-full sm:w-auto px-4 py-2 bg-white dark:bg-[#2d2d30] border border-gray-300 dark:border-[#3e3e42] rounded font-semibold text-gray-900 dark:text-gray-100 focus:outline-none focus:border-blue-500 dark:focus:border-[#007acc]"
             >
               <option value="GET">GET</option>
               <option value="POST">POST</option>
@@ -223,12 +227,12 @@ export default function Home() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && sendRequest()}
-              className="flex-1 px-3 sm:px-4 py-2 bg-[#2d2d30] border border-[#3e3e42] rounded text-sm focus:outline-none focus:border-[#007acc]"
+              className="flex-1 px-3 sm:px-4 py-2 bg-white dark:bg-[#2d2d30] border border-gray-300 dark:border-[#3e3e42] rounded text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:border-blue-500 dark:focus:border-[#007acc]"
             />
             <button
               onClick={sendRequest}
               disabled={isLoading}
-              className="w-full sm:w-auto px-6 py-2 bg-[#0e639c] hover:bg-[#1177bb] disabled:bg-[#0e639c]/50 rounded font-semibold transition-colors"
+              className="w-full sm:w-auto px-6 py-2 bg-blue-600 dark:bg-[#0e639c] hover:bg-blue-700 dark:hover:bg-[#1177bb] disabled:bg-blue-400 dark:disabled:bg-[#0e639c]/50 rounded font-semibold transition-colors text-white"
             >
               {isLoading ? 'Sending...' : 'Send'}
             </button>
@@ -238,15 +242,15 @@ export default function Home() {
         {/* Main Content - Responsive Layout */}
         <div className="flex-1 flex flex-col lg:flex-row min-h-0 overflow-hidden">
           {/* Request Panel */}
-          <div className="w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r border-[#3e3e42] flex flex-col min-h-[300px] lg:min-h-0">
+          <div className="w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r border-gray-300 dark:border-[#3e3e42] flex flex-col min-h-[300px] lg:min-h-0">
             {/* Tabs */}
-            <div className="flex bg-[#252526] border-b border-[#3e3e42] overflow-x-auto">
+            <div className="flex bg-gray-100 dark:bg-[#252526] border-b border-gray-300 dark:border-[#3e3e42] overflow-x-auto">
               <button
                 onClick={() => setActiveTab('params')}
                 className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
                   activeTab === 'params'
-                    ? 'text-white border-b-2 border-[#007acc]'
-                    : 'text-gray-400 hover:text-gray-300'
+                    ? 'text-gray-900 dark:text-white border-b-2 border-blue-600 dark:border-[#007acc]'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300'
                 }`}
               >
                 Query Params
@@ -255,8 +259,8 @@ export default function Home() {
                 onClick={() => setActiveTab('headers')}
                 className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
                   activeTab === 'headers'
-                    ? 'text-white border-b-2 border-[#007acc]'
-                    : 'text-gray-400 hover:text-gray-300'
+                    ? 'text-gray-900 dark:text-white border-b-2 border-blue-600 dark:border-[#007acc]'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300'
                 }`}
               >
                 Headers
@@ -265,8 +269,8 @@ export default function Home() {
                 onClick={() => setActiveTab('body')}
                 className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
                   activeTab === 'body'
-                    ? 'text-white border-b-2 border-[#007acc]'
-                    : 'text-gray-400 hover:text-gray-300'
+                    ? 'text-gray-900 dark:text-white border-b-2 border-blue-600 dark:border-[#007acc]'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300'
                 }`}
               >
                 Body
@@ -292,7 +296,7 @@ export default function Home() {
               {activeTab === 'body' && (
                 <div className="flex flex-col h-full gap-2">
                   {method === 'GET' && (
-                    <div className="px-4 py-3 bg-[#3e3e42] border border-[#007acc] rounded text-sm text-gray-300">
+                    <div className="px-4 py-3 bg-blue-50 dark:bg-[#3e3e42] border border-blue-400 dark:border-[#007acc] rounded text-sm text-blue-900 dark:text-gray-300">
                       ℹ️ GET requests cannot have a body. Body will not be sent with this request.
                     </div>
                   )}
@@ -307,14 +311,14 @@ export default function Home() {
                         }
                       }}
                       disabled={method === 'GET'}
-                      className="px-3 py-1.5 bg-[#0e639c] hover:bg-[#1177bb] disabled:bg-[#3e3e42] disabled:cursor-not-allowed rounded text-xs transition-colors"
+                      className="px-3 py-1.5 bg-blue-600 dark:bg-[#0e639c] hover:bg-blue-700 dark:hover:bg-[#1177bb] disabled:bg-gray-300 dark:disabled:bg-[#3e3e42] disabled:cursor-not-allowed rounded text-xs text-white transition-colors"
                     >
                       Format JSON
                     </button>
                     <button
                       onClick={() => setBody('{\n  \n}')}
                       disabled={method === 'GET'}
-                      className="px-3 py-1.5 bg-[#3e3e42] hover:bg-[#4e4e52] disabled:bg-[#3e3e42] disabled:cursor-not-allowed rounded text-xs transition-colors"
+                      className="px-3 py-1.5 bg-gray-300 dark:bg-[#3e3e42] hover:bg-gray-400 dark:hover:bg-[#4e4e52] disabled:bg-gray-200 dark:disabled:bg-[#3e3e42] disabled:cursor-not-allowed rounded text-xs text-gray-900 dark:text-gray-100 transition-colors"
                     >
                       Clear
                     </button>
@@ -323,7 +327,7 @@ export default function Home() {
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
                     placeholder={method === 'GET' ? 'Body not allowed for GET requests' : '{"key": "value"}'}
-                    className="flex-1 w-full min-h-[200px] sm:min-h-[300px] px-3 sm:px-4 py-2 sm:py-3 bg-[#2d2d30] border border-[#3e3e42] rounded font-mono text-xs sm:text-sm focus:outline-none focus:border-[#007acc] resize-none"
+                    className="flex-1 w-full min-h-[200px] sm:min-h-[300px] px-3 sm:px-4 py-2 sm:py-3 bg-white dark:bg-[#2d2d30] border border-gray-300 dark:border-[#3e3e42] rounded font-mono text-xs sm:text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:border-blue-500 dark:focus:border-[#007acc] resize-none"
                     disabled={method === 'GET'}
                   />
                 </div>
